@@ -23,27 +23,47 @@
 
 package net.stroyer.autobroadcast.Broadcast;
 
+import net.md_5.bungee.api.chat.TextComponent;
 import net.stroyer.autobroadcast.Objects.BroadcastSettings;
 import net.stroyer.autobroadcast.Objects.Message;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.Random;
 
 public class Broadcast {
 
-    int currentId = 0;
+    private static int currentId = 0;
 
     public static void broadcastMessage(){
+        Bukkit.getLogger().info("gotbroadcast");
+        if(Message.messages.size() == 0){
+            return;
+        }
         if(BroadcastSettings.settings.isRandomised()){
             Random random = new Random();
-            int i = random.nextInt(Message.messages.size());
-
+            int i = random.nextInt(Message.messages.size()-1);
+            send(Message.messages.get(i));
         }else{
+            if(Message.messages.size() == currentId - 1){
+            currentId = 0;
+        }else{
+            currentId ++;
+        }
+            send(Message.messages.get(currentId));
 
         }
     }
 
     public static void send(Message message){
+        for(Player player : Bukkit.getOnlinePlayers()){
+            player.spigot().sendMessage(message.getType(), new TextComponent(BroadcastSettings.settings.getPrefix() + message.getColor() + message.getMessage()));
 
+        }
+    }
+
+    public static void sendPlayer(Player player, Message message){
+        player.spigot().sendMessage(message.getType(), new TextComponent(BroadcastSettings.settings.getPrefix() + message.getColor() + message.getMessage()));
     }
 
 }

@@ -23,36 +23,24 @@
 
 package net.stroyer.autobroadcast.Listeners;
 
-import net.stroyer.autobroadcast.GUIs.BroadcastSettingsGUI;
-import net.stroyer.autobroadcast.GUIs.MainGUI;
-import net.stroyer.autobroadcast.GUIs.MessagesGUI;
+import io.papermc.paper.event.player.AsyncChatEvent;
 import net.stroyer.autobroadcast.GUIs.NewMessage;
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerChatEvent;
 
-public class InventoryInteract implements Listener {
+public class ChatListener implements Listener {
     @EventHandler
-    public static void playerInteract(InventoryClickEvent e) {
-        if(e.getInventory().equals(MainGUI.mainInventory)){
-            MainGUI.clickEvent(e);
-            e.setCancelled(true);
+    public static void playerInput(PlayerChatEvent e){
+        if(!NewMessage.waitingForInput){
+            return;
         }
-        if(e.getInventory().equals(MessagesGUI.inv)){
-            MessagesGUI.invInteract(e);
-            e.setCancelled(true);
+        if(!NewMessage.playerWaitingForInput.equals(e.getPlayer())){
+            return;
         }
-        if(e.getInventory().equals(NewMessage.inv) || e.getInventory().equals(NewMessage.pickColorInv) || e.getInventory().equals(NewMessage.typeInv)){
-            e.setCancelled(true);
-            NewMessage.inventoryInteract(e);
-        }
-        if(e.getInventory().equals(BroadcastSettingsGUI.mainInv)){
-            e.setCancelled(true);
-            BroadcastSettingsGUI.invEvent(e);
-        }
-        if(e.getInventory().equals(BroadcastSettingsGUI.intervalInventory)){
-            e.setCancelled(true);
-            BroadcastSettingsGUI.adjustEvent(e);
-        }
+        NewMessage.recievedInput(e.getMessage(), e.getPlayer());
+        e.setCancelled(true);
+        return;
     }
 }

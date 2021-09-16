@@ -24,8 +24,11 @@
 package net.stroyer.autobroadcast.Objects;
 
 import net.stroyer.autobroadcast.GUIs.MainGUI;
+import net.stroyer.autobroadcast.GUIs.MessagesGUI;
+import net.stroyer.autobroadcast.GUIs.NewMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
@@ -49,13 +52,21 @@ public class GUI {
 
     public void closeThisInventory(Player player){
         if(this.priorInv == null){
-            player.closeInventory();
+            if(player.getInventory() == null){
+                return;
+            }
+            player.closeInventory(InventoryCloseEvent.Reason.UNKNOWN);
         }else{
+            player.closeInventory(InventoryCloseEvent.Reason.UNKNOWN);
             player.openInventory(this.priorInv);
+            this.thisInv = this.priorInv;
+            this.priorInv = findGUI(this.thisInv).priorInv;
+            player.updateInventory();
         }
     }
 
     public void open(@NotNull Player player){
+        player.closeInventory(InventoryCloseEvent.Reason.UNKNOWN);
         player.openInventory(this.thisInv);
     }
 
@@ -70,9 +81,20 @@ public class GUI {
 
     }
 
+    public Inventory getThisInv(){
+        return this.thisInv;
+    }
+
+    public Inventory getPriorInv(){
+        return this.priorInv;
+    }
+
     public void clickEvent(InventoryClickEvent e) {
         if(e.getInventory().equals(MainGUI.mainInventory)){
             MainGUI.clickEvent(e);
+        }
+        if(e.getInventory().equals(MessagesGUI.inv)){
+            NewMessage.openInventory((Player) e.getWhoClicked());
         }
     }
 }

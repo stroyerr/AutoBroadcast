@@ -32,6 +32,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -46,7 +47,7 @@ public class MainGUI {
     public static void open(Player player){
         mainInventory = Bukkit.createInventory(null, 45, ChatColor.DARK_AQUA + "AutoBroadcast Menu");
         broadcastSettings = NewItem.createGuiItem(Material.REDSTONE, ChatColor.RED + "Broadcast Settings");
-        messages = NewItem.createGuiItem(Material.PAPER, ChatColor.WHITE + "Broadcast Messages");
+        messages = NewItem.createGuiItem(Material.PAPER, ChatColor.WHITE + "Messages");
         mainInventory.setItem(19, messages);
         mainInventory.setItem(22, broadcastSettings);
         toggleEnable = getEnabled();
@@ -60,19 +61,18 @@ public class MainGUI {
 
     public static ItemStack getEnabled(){
         if(BroadcastSettings.settings.isEnabled()){
-            return NewItem.createGuiItem(Material.REDSTONE_BLOCK, ChatColor.DARK_RED + "Disable Broadcast");
+            return NewItem.createGuiItem(Material.REDSTONE_BLOCK, ChatColor.DARK_RED + "Disable Broadcast", ChatColor.GREEN + "Currently enabled.");
         }else{
-            return NewItem.createGuiItem(Material.EMERALD_BLOCK, ChatColor.GREEN + "Enable Broadcast");
+            return NewItem.createGuiItem(Material.EMERALD_BLOCK, ChatColor.GREEN + "Enable Broadcast", ChatColor.RED + "Currently disabled.");
         }
     }
 
     public static void clickEvent(InventoryClickEvent e) {
         if(e.getCurrentItem().equals(messages)){
-            GUI messagesGUI = new GUI(null, mainInventory);
-            messagesGUI.open((Player) e.getWhoClicked());
+            MessagesGUI.open((Player) e.getWhoClicked());
         }
         if(e.getCurrentItem().equals(broadcastSettings)){
-
+            BroadcastSettingsGUI.open((Player) e.getWhoClicked());
         }
         if(e.getCurrentItem().equals(toggleEnable)){
             BroadcastSettings.settings.toggleEnabled();

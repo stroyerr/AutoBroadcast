@@ -35,8 +35,10 @@ public class BroadcastTimer {
 
         @Override
         public void run() {
-            BroadcastHandler.timerEvent(secondsElapsed);
-            secondsElapsed ++;
+            if(BroadcastSettings.settings.isEnabled()){
+                BroadcastHandler.timerEvent(secondsElapsed);
+                secondsElapsed ++;
+            }
         }
     };
 

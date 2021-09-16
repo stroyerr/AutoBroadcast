@@ -26,10 +26,11 @@ package net.stroyer.autobroadcast.Objects;
 import net.md_5.bungee.api.ChatMessageType;
 import org.bukkit.ChatColor;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Message {
+public class Message implements Serializable {
 
     public static List<Message> messages = new ArrayList<Message>();
 
@@ -43,6 +44,35 @@ public class Message {
         this.message = message;
         this.color = color;
         this.id = messages.size();
+        messages.add(this);
+    }
+
+    public ChatMessageType getType(){
+        return this.type;
+    }
+
+    public String getMessage(){
+        return message;
+    }
+
+    public ChatColor getColor(){
+        return this.color;
+    }
+
+    public int getId(){
+        return this.id;
+    }
+
+    public static void save() throws IOException {
+        FileOutputStream fOut = new FileOutputStream("./plugins/AutoBroadcast/messages.ab");
+        ObjectOutputStream oOut = new ObjectOutputStream(fOut);
+        oOut.writeObject(messages);
+    }
+
+    public static void load() throws IOException, ClassNotFoundException {
+        FileInputStream fIn = new FileInputStream("./plugins/AutoBroadcast/messages.ab");
+        ObjectInputStream oIn = new ObjectInputStream(fIn);
+        messages = (List<Message>) oIn.readObject();
     }
 
 

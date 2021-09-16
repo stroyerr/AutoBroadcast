@@ -23,36 +23,43 @@
 
 package net.stroyer.autobroadcast.Listeners;
 
-import net.stroyer.autobroadcast.GUIs.BroadcastSettingsGUI;
 import net.stroyer.autobroadcast.GUIs.MainGUI;
 import net.stroyer.autobroadcast.GUIs.MessagesGUI;
 import net.stroyer.autobroadcast.GUIs.NewMessage;
+import net.stroyer.autobroadcast.Main;
+import net.stroyer.autobroadcast.Objects.GUI;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 
-public class InventoryInteract implements Listener {
+public class InventoryClose implements Listener {
     @EventHandler
-    public static void playerInteract(InventoryClickEvent e) {
-        if(e.getInventory().equals(MainGUI.mainInventory)){
-            MainGUI.clickEvent(e);
-            e.setCancelled(true);
+    public static void closedInventory(InventoryCloseEvent e){
+//        if(GUI.findGUI(e.getInventory()) == null){
+//            return;
+//        }else{
+//            if(e.getReason().equals(InventoryCloseEvent.Reason.UNKNOWN)){
+//                return;
+//            }
+//            GUI gui = GUI.findGUI(e.getInventory());
+//            gui = new GUI(GUI.findGUI(e.getInventory()).getPriorInv(), GUI.findGUI(GUI.findGUI(e.getInventory()).getPriorInv()).getPriorInv());
+//            gui.open((Player) e.getPlayer());
+////            e.getPlayer().closeInventory();
+////            e.getPlayer().openInventory(GUI.findGUI(e.getInventory()).getPriorInv());
+//            //GUI.findGUI(e.getInventory()).closeThisInventory((Player) e.getPlayer());
+//        }
+
+        if (e.getInventory().equals(MainGUI.mainInventory)) {
+            return;
         }
         if(e.getInventory().equals(MessagesGUI.inv)){
-            MessagesGUI.invInteract(e);
-            e.setCancelled(true);
+            e.getPlayer().openInventory(MainGUI.mainInventory);
+            return;
         }
-        if(e.getInventory().equals(NewMessage.inv) || e.getInventory().equals(NewMessage.pickColorInv) || e.getInventory().equals(NewMessage.typeInv)){
-            e.setCancelled(true);
-            NewMessage.inventoryInteract(e);
-        }
-        if(e.getInventory().equals(BroadcastSettingsGUI.mainInv)){
-            e.setCancelled(true);
-            BroadcastSettingsGUI.invEvent(e);
-        }
-        if(e.getInventory().equals(BroadcastSettingsGUI.intervalInventory)){
-            e.setCancelled(true);
-            BroadcastSettingsGUI.adjustEvent(e);
+        if(e.getInventory().equals(NewMessage.inv)){
+            e.getPlayer().openInventory(MessagesGUI.inv);
+            return;
         }
     }
 }
