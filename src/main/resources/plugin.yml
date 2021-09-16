@@ -1,6 +1,13 @@
-name: Main
+name: AutoBroadcast
 version: ${project.version}
 main: net.stroyer.autobroadcast.Main
 api-version: 1.17
 authors: [ Stroyer_ ]
 description: Powerful Autobroadcast Plugin
+prefix: "[AutoBroadcast] "
+commands:
+  autobroadcast:
+    usage: /<command>
+    description: Open the Menu for Autobroadcast
+    permission: autobroadcast.configure
+    aliases: [ab, b, autob, abroadcast, abc]
