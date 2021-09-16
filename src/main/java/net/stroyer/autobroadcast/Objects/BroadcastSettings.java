@@ -94,4 +94,12 @@ public class BroadcastSettings implements Serializable {
     public void setInterval(int newInterval) {
         secondsInterval = newInterval;
     }
+
+    public void toggleRandomised() {
+        settings.randomised = !settings.isRandomised();
+    }
+
+    public void setPrefix(String newPrefix) {
+        prefix = newPrefix;
+    }
 }

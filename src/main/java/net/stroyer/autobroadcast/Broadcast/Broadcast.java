@@ -27,6 +27,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.stroyer.autobroadcast.Objects.BroadcastSettings;
 import net.stroyer.autobroadcast.Objects.Message;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.Random;
@@ -36,7 +37,6 @@ public class Broadcast {
     private static int currentId = 0;
 
     public static void broadcastMessage(){
-        Bukkit.getLogger().info("gotbroadcast");
         if(Message.messages.size() == 0){
             return;
         }
@@ -45,19 +45,19 @@ public class Broadcast {
             int i = random.nextInt(Message.messages.size()-1);
             send(Message.messages.get(i));
         }else{
-            if(Message.messages.size() == currentId - 1){
+            if(Message.messages.size() == currentId){
             currentId = 0;
-        }else{
-            currentId ++;
         }
-            send(Message.messages.get(currentId));
+                send(Message.messages.get(currentId));
+                currentId++;
+
 
         }
     }
 
     public static void send(Message message){
         for(Player player : Bukkit.getOnlinePlayers()){
-            player.spigot().sendMessage(message.getType(), new TextComponent(BroadcastSettings.settings.getPrefix() + message.getColor() + message.getMessage()));
+            player.spigot().sendMessage(message.getType(), new TextComponent(BroadcastSettings.settings.getPrefix() + ChatColor.GRAY + " // " + message.getColor() + message.getMessage()));
 
         }
     }

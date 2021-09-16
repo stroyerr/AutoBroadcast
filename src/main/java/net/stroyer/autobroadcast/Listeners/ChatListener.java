@@ -24,7 +24,9 @@
 package net.stroyer.autobroadcast.Listeners;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
+import net.stroyer.autobroadcast.GUIs.BroadcastSettingsGUI;
 import net.stroyer.autobroadcast.GUIs.NewMessage;
+import net.stroyer.autobroadcast.Methods.GetColoredString;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,14 +35,24 @@ import org.bukkit.event.player.PlayerChatEvent;
 public class ChatListener implements Listener {
     @EventHandler
     public static void playerInput(PlayerChatEvent e){
-        if(!NewMessage.waitingForInput){
+        if(!NewMessage.waitingForInput && !BroadcastSettingsGUI.waitingInput){
             return;
         }
-        if(!NewMessage.playerWaitingForInput.equals(e.getPlayer())){
-            return;
-        }
-        NewMessage.recievedInput(e.getMessage(), e.getPlayer());
-        e.setCancelled(true);
-        return;
+        if(NewMessage.playerWaitingForInput != null){
+            if(NewMessage.playerWaitingForInput.equals(e.getPlayer())){
+                String newString = GetColoredString.getRawWithColors(e.getMessage());
+                NewMessage.recievedInput(newString, e.getPlayer());
+                e.setCancelled(true);
+                return;
+            }
+        }else if(BroadcastSettingsGUI.playerToWait != null){
+            if(BroadcastSettingsGUI.playerToWait.equals(e.getPlayer())){
+                    String newString = GetColoredString.getRawWithColors(e.getMessage());
+                    BroadcastSettingsGUI.gotPrefix(e.getPlayer(), newString);
+                    e.setCancelled(true);
+                    return;
+            }
+        }else return;
+
     }
 }

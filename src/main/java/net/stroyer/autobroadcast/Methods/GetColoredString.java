@@ -21,7 +21,17 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package net.stroyer.autobroadcast.Util;
+package net.stroyer.autobroadcast.Methods;
 
-public class UpdateCheker {
+import org.bukkit.ChatColor;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class GetColoredString {
+    public static String getRawWithColors(String input) {
+        String newString = input;
+        newString = ChatColor.translateAlternateColorCodes('&', input);
+        return newString;
+    }
 }

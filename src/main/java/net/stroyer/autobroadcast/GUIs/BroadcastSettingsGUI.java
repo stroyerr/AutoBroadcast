@@ -24,8 +24,13 @@
 package net.stroyer.autobroadcast.GUIs;
 
 import com.sun.tools.javac.jvm.Items;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import net.stroyer.autobroadcast.Methods.FillBlank;
 import net.stroyer.autobroadcast.Methods.NewItem;
+import net.stroyer.autobroadcast.Methods.Send;
 import net.stroyer.autobroadcast.Objects.BroadcastSettings;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -42,13 +47,17 @@ public class BroadcastSettingsGUI {
     public static ItemStack interval = NewItem.createGuiItem(Material.CLOCK, ChatColor.GOLD + "Interval", ChatColor.YELLOW + "" + BroadcastSettings.settings.getSecondsInterval() + " seconds");
     public static ItemStack prefix = NewItem.createGuiItem(Material.NAME_TAG, ChatColor.LIGHT_PURPLE + "Prefix", BroadcastSettings.settings.getPrefix());
     public static ItemStack back = NewItem.createGuiItem(Material.BARRIER, ChatColor.DARK_RED + "Back");
+    public static ItemStack randomised;
 
     public static void open(Player player){
+        prefix = NewItem.createGuiItem(Material.NAME_TAG, ChatColor.LIGHT_PURPLE + "Prefix", BroadcastSettings.settings.getPrefix());
+        randomised = NewItem.createGuiItem(Material.COMMAND_BLOCK, ChatColor.AQUA + "Toggle Randomised", ChatColor.GOLD + "Randomise currently: " + BroadcastSettings.settings.isRandomised());
         mainInv = Bukkit.createInventory(null, 9, "Broadcast Settings");
         interval = NewItem.createGuiItem(Material.CLOCK, ChatColor.GOLD + "Interval", ChatColor.YELLOW + "" + BroadcastSettings.settings.getSecondsInterval() + " seconds");
-        mainInv.setItem(2, prefix);
-        mainInv.setItem(4, interval);
-        mainInv.setItem(6, back);
+        mainInv.setItem(3, prefix);
+        mainInv.setItem(5, interval);
+        mainInv.setItem(7, back);
+        mainInv.setItem(1, randomised);
 
         mainInv = FillBlank.updateInventory(mainInv);
         player.openInventory(mainInv);
@@ -61,6 +70,33 @@ public class BroadcastSettingsGUI {
         if(e.getCurrentItem().equals(interval)){
             intervalAdjust((Player) e.getWhoClicked());
         }
+        if(e.getCurrentItem().equals(randomised)){
+            BroadcastSettings.settings.toggleRandomised();
+            open((Player) e.getWhoClicked());
+        }
+        if(e.getCurrentItem().equals(prefix)){
+            setPrefix((Player) e.getWhoClicked());
+        }
+    }
+
+    public static boolean waitingInput = false;
+    public static Player playerToWait = null;
+
+    public static void setPrefix(Player player){
+        playerToWait = player;
+        waitingInput = true;
+        player.closeInventory();
+        TextComponent text = new TextComponent(ChatColor.GOLD + "Enter the new prefix for your broadcaster. You can use color codes (&4, &e, &l, &k etc.), or click to cancel.");
+        text.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/b cancel"));
+        text.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor.RED + "Cancel Input")));
+        player.spigot().sendMessage(text);
+        }
+
+    public static void gotPrefix(Player player, String newPrefix){
+        waitingInput = false;
+        playerToWait = null;
+        BroadcastSettings.settings.setPrefix(newPrefix);
+        open(player);
     }
 
     public static Inventory intervalInventory;
@@ -133,5 +169,11 @@ public class BroadcastSettingsGUI {
         if(e.getCurrentItem().equals(minus60)){
             adjust(-60, p);
         }
+    }
+
+    public static void canceledInput(Player player) {
+        open(player);
+        waitingInput = false;
+        playerToWait = null;
     }
 }
