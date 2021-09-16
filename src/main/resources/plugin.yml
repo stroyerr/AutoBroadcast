@@ -1,0 +1,6 @@
+name: Main
+version: ${project.version}
+main: net.stroyer.autobroadcast.Main
+api-version: 1.17
+authors: [ Stroyer_ ]
+description: Powerful Autobroadcast Plugin
