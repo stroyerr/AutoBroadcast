@@ -23,9 +23,12 @@
 
 package net.stroyer.autobroadcast.Broadcast;
 
+import net.kyori.adventure.text.Component;
+import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.stroyer.autobroadcast.Objects.BroadcastSettings;
 import net.stroyer.autobroadcast.Objects.Message;
+import net.stroyer.autobroadcast.Util.Playsound;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -56,14 +59,38 @@ public class Broadcast {
     }
 
     public static void send(Message message){
+        Playsound.all();
         for(Player player : Bukkit.getOnlinePlayers()){
-            player.spigot().sendMessage(message.getType(), new TextComponent(BroadcastSettings.settings.getPrefix() + ChatColor.GRAY + " // " + message.getColor() + message.getMessage()));
-
+            if(message.getType().equals(ChatMessageType.ACTION_BAR)){
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message.getMessage()));
+            }else if(message.getType().equals(ChatMessageType.CHAT)){
+                player.sendMessage("");
+                player.sendMessage("");
+                player.spigot().sendMessage(message.getType(), new TextComponent("        " + BroadcastSettings.settings.getPrefix()));
+                player.sendMessage("");
+                player.spigot().sendMessage(message.getType(), new TextComponent(message.getColor() + message.getMessage()));
+                player.sendMessage("");
+                player.sendMessage("");
+            }else if(message.getType().equals(ChatMessageType.SYSTEM)){
+                player.sendTitle(BroadcastSettings.settings.getPrefix(), message.getMessage(), 10, 100, 10);
+            }
         }
     }
 
     public static void sendPlayer(Player player, Message message){
-        player.spigot().sendMessage(message.getType(), new TextComponent(BroadcastSettings.settings.getPrefix() + message.getColor() + message.getMessage()));
+        if(message.getType().equals(ChatMessageType.ACTION_BAR)){
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message.getMessage()));
+        }else if(message.getType().equals(ChatMessageType.CHAT)){
+            player.sendMessage("");
+            player.sendMessage("");
+            player.spigot().sendMessage(message.getType(), new TextComponent("        " + BroadcastSettings.settings.getPrefix()));
+            player.sendMessage("");
+            player.spigot().sendMessage(message.getType(), new TextComponent(message.getColor() + message.getMessage()));
+            player.sendMessage("");
+            player.sendMessage("");
+        }else if(message.getType().equals(ChatMessageType.SYSTEM)){
+            player.sendTitle(BroadcastSettings.settings.getPrefix(), message.getMessage(), 10, 100, 10);
+        }
     }
 
 }

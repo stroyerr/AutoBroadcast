@@ -153,6 +153,10 @@ public class NewMessage {
             type = ChatMessageType.CHAT;
             openInventory((Player) e.getWhoClicked());
         }
+        if(e.getCurrentItem().equals(title)){
+            type = ChatMessageType.SYSTEM;
+            openInventory((Player) e.getWhoClicked());
+        }
         if(e.getCurrentItem().equals(messageItem)){
             newMessage((Player) e.getWhoClicked());
         }
@@ -207,11 +211,13 @@ public class NewMessage {
     public static Inventory typeInv;
     public static ItemStack ActionBarItem = NewItem.createGuiItem(Material.EXPERIENCE_BOTTLE, ChatColor.GREEN + "Action Bar");
     public static ItemStack ChatItem = NewItem.createGuiItem(Material.PAPER, ChatColor.GOLD + "Chat Message");
+    public static ItemStack title = NewItem.createGuiItem(Material.EMERALD, ChatColor.AQUA + "Title Message");
 
     public static void pickType(Player player){
         typeInv = Bukkit.createInventory(null, 9, "Message type");
-        typeInv.setItem(3, ChatItem);
-        typeInv.setItem(5, ActionBarItem);
+        typeInv.setItem(2, ChatItem);
+        typeInv.setItem(4, ActionBarItem);
+        typeInv.setItem(6, title);
         typeInv = FillBlank.updateInventory(typeInv);
         player.openInventory(typeInv);
     }
@@ -241,7 +247,13 @@ public class NewMessage {
         message = msg;
         Send.message(player, "Message was set to: ");
         player.sendMessage("");
-        player.sendMessage(BroadcastSettings.settings.getPrefix() + color + message);
+        player.sendMessage("");
+        player.sendMessage("");
+        player.spigot().sendMessage(type, new TextComponent("       " + BroadcastSettings.settings.getPrefix()));
+        player.sendMessage("");
+        player.spigot().sendMessage(type, new TextComponent(color + message));
+        player.sendMessage("");
+        player.sendMessage("");
         openInventory(player);
     }
 

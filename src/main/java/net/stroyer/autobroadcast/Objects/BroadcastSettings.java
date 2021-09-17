@@ -25,6 +25,7 @@ package net.stroyer.autobroadcast.Objects;
 
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -41,13 +42,19 @@ public class BroadcastSettings implements Serializable {
     private String prefix = "";
     private int secondsInterval;
     private Boolean randomised;
+    private Boolean soundEnabled;
 
-    public BroadcastSettings(@NotNull Boolean enabled, @NotNull List<String> messages, @NotNull String prefix, int secondsInterval, Boolean randomised){
+    public BroadcastSettings(@NotNull Boolean enabled, @NotNull List<String> messages, @NotNull String prefix, int secondsInterval, Boolean randomised, @Nullable  Boolean soundEnabled){
         this.enabled = enabled;
         this.prefix = prefix;
         this.secondsInterval = secondsInterval;
         this.randomised = randomised;
         settings = this;
+        if(soundEnabled == null){
+            this.soundEnabled = true;
+        }else{
+            this.soundEnabled = soundEnabled;
+        }
     }
 
     public BroadcastSettings(){
@@ -55,6 +62,7 @@ public class BroadcastSettings implements Serializable {
         this.prefix = demoPrefix;
         this.secondsInterval = 60;
         this.randomised = false;
+        this.soundEnabled = true;
         settings = this;
     }
 
@@ -101,5 +109,13 @@ public class BroadcastSettings implements Serializable {
 
     public void setPrefix(String newPrefix) {
         prefix = newPrefix;
+    }
+
+    public boolean soundEnabled() {
+        return this.soundEnabled;
+    }
+
+    public void toggleSoundEnabled() {
+        this.soundEnabled = ! this.soundEnabled;
     }
 }

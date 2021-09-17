@@ -53,11 +53,17 @@ public class BroadcastSettingsGUI {
         prefix = NewItem.createGuiItem(Material.NAME_TAG, ChatColor.LIGHT_PURPLE + "Prefix", BroadcastSettings.settings.getPrefix());
         randomised = NewItem.createGuiItem(Material.COMMAND_BLOCK, ChatColor.AQUA + "Toggle Randomised", ChatColor.GOLD + "Randomise currently: " + BroadcastSettings.settings.isRandomised());
         mainInv = Bukkit.createInventory(null, 9, "Broadcast Settings");
+        if(BroadcastSettings.settings.soundEnabled()){
+            soundEnabled = NewItem.createGuiItem(Material.EMERALD_BLOCK, ChatColor.GREEN + "Broadcast sounds are enabled");
+        }else{
+            soundEnabled = NewItem.createGuiItem(Material.REDSTONE_BLOCK, ChatColor.RED + "Broadcast sounds are disabled");
+        }
         interval = NewItem.createGuiItem(Material.CLOCK, ChatColor.GOLD + "Interval", ChatColor.YELLOW + "" + BroadcastSettings.settings.getSecondsInterval() + " seconds");
-        mainInv.setItem(3, prefix);
-        mainInv.setItem(5, interval);
-        mainInv.setItem(7, back);
-        mainInv.setItem(1, randomised);
+        mainInv.setItem(4, prefix);
+        mainInv.setItem(6, interval);
+        mainInv.setItem(8, back);
+        mainInv.setItem(2, randomised);
+        mainInv.setItem(0, soundEnabled);
 
         mainInv = FillBlank.updateInventory(mainInv);
         player.openInventory(mainInv);
@@ -76,6 +82,10 @@ public class BroadcastSettingsGUI {
         }
         if(e.getCurrentItem().equals(prefix)){
             setPrefix((Player) e.getWhoClicked());
+        }
+        if(e.getCurrentItem().equals(soundEnabled)){
+            BroadcastSettings.settings.toggleSoundEnabled();
+            open((Player) e.getWhoClicked());
         }
     }
 
@@ -109,6 +119,7 @@ public class BroadcastSettingsGUI {
     public static ItemStack currentInterval;
     public static ItemStack set = NewItem.createGuiItem(Material.EMERALD_BLOCK, ChatColor.GOLD + "Set Interval");
     public static ItemStack backInterval = NewItem.createGuiItem(Material.BARRIER, ChatColor.GOLD + "Back");
+    public static ItemStack soundEnabled;
 
     private static int newInterval = BroadcastSettings.settings.getSecondsInterval();
 
