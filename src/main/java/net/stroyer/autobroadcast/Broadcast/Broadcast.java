@@ -53,8 +53,6 @@ public class Broadcast {
         }
                 send(Message.messages.get(currentId));
                 currentId++;
-
-
         }
     }
 

@@ -21,20 +21,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package net.stroyer.autobroadcast.Util;
+package net.stroyer.autobroadcast.GUIs;
 
-import net.stroyer.autobroadcast.Objects.BroadcastSettings;
-import org.bukkit.Bukkit;
-import org.bukkit.Sound;
-import org.bukkit.entity.Player;
-
-public class Playsound {
-    public static void all(){
-        if(!BroadcastSettings.settings.soundEnabled()){
-            return;
-        }
-        for(Player player : Bukkit.getOnlinePlayers()){
-            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10f, 1f);
-        }
-    }
+public class ViewMessage {
 }

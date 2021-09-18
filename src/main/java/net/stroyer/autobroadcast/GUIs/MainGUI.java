@@ -32,7 +32,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -43,13 +42,16 @@ public class MainGUI {
     public static ItemStack broadcastSettings;
     public static ItemStack messages;
     public static ItemStack toggleEnable;
+    public static ItemStack broadcastNow;
 
     public static void open(Player player){
         mainInventory = Bukkit.createInventory(null, 45, ChatColor.DARK_AQUA + "AutoBroadcast Menu");
         broadcastSettings = NewItem.createGuiItem(Material.REDSTONE, ChatColor.RED + "Broadcast Settings");
         messages = NewItem.createGuiItem(Material.PAPER, ChatColor.WHITE + "Messages");
-        mainInventory.setItem(19, messages);
-        mainInventory.setItem(22, broadcastSettings);
+        broadcastNow = NewItem.createGuiItem(Material.ENDER_PEARL, ChatColor.LIGHT_PURPLE + "Broadcast Now", "Send a message now");
+        mainInventory.setItem(19, broadcastNow);
+        mainInventory.setItem(21, messages);
+        mainInventory.setItem(23, broadcastSettings);
         toggleEnable = getEnabled();
         mainInventory.setItem(25, toggleEnable);
 
@@ -77,6 +79,9 @@ public class MainGUI {
         if(e.getCurrentItem().equals(toggleEnable)){
             BroadcastSettings.settings.toggleEnabled();
             updateInventory((Player) e.getWhoClicked());
+        }
+        if(e.getCurrentItem().equals(broadcastNow)){
+            BroadcastNow.open((Player) e.getWhoClicked());
         }
     }
 

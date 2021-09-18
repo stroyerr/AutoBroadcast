@@ -23,10 +23,7 @@
 
 package net.stroyer.autobroadcast.Listeners;
 
-import net.stroyer.autobroadcast.GUIs.BroadcastSettingsGUI;
-import net.stroyer.autobroadcast.GUIs.MainGUI;
-import net.stroyer.autobroadcast.GUIs.MessagesGUI;
-import net.stroyer.autobroadcast.GUIs.NewMessage;
+import net.stroyer.autobroadcast.GUIs.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -53,6 +50,18 @@ public class InventoryInteract implements Listener {
         if(e.getInventory().equals(BroadcastSettingsGUI.intervalInventory)){
             e.setCancelled(true);
             BroadcastSettingsGUI.adjustEvent(e);
+        }
+        if(e.getInventory().equals(BroadcastNow.inv)){
+            BroadcastNow.event(e);
+            e.setCancelled(true);
+        }
+        if(e.getInventory().equals(BroadcastNowMessages.inv)){
+            e.setCancelled(true);
+            BroadcastNowMessages.interactEvent(e);
+        }
+        if(e.getInventory().equals(BroadcastNowViewMessage.inv)){
+            e.setCancelled(true);
+            BroadcastNowViewMessage.event(e);
         }
     }
 }
