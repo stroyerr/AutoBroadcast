@@ -1,16 +1,26 @@
 # AutoBroadcast
 The all in one auto broadcaster.
 
-Every single feature is customisable in-game via a menu
-Super lightweight and lag-free
-Multiple message types
-Supports colour codes (&3, &a, etc.)
-Choose how often the announcements run
-Customise your announcer prefix easily
-Single-click to enable or disable the announcer
-Easy to create messages to broadcast from in-game via the menu
-Only one permission needed
-Toggle between random and fixed order announcements/broadcasts
+- Every single feature is customisable in-game via a menu
+
+- Super lightweight and lag-free
+
+- Multiple message types
+
+- Supports color codes (&3, &a, etc.)
+
+- Choose how often the announcements run
+
+- Customize your announcer prefix easily
+
+- Single-click to enable or disable the announcer
+
+- Easy to create messages to broadcast from in-game via the menu
+
+- Only one permission needed
+
+- Toggle between random and fixed order announcements/broadcasts
+
 
 Plugin Showcase / Demonstration:
 
