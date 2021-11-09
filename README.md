@@ -1,6 +1,8 @@
 # AutoBroadcast
 The all in one auto broadcaster.
 
+### Features
+
 - Every single feature is customisable in-game via a menu
 
 - Super lightweight and lag-free
@@ -21,6 +23,8 @@ The all in one auto broadcaster.
 
 - Toggle between random and fixed order announcements/broadcasts
 
+
+### Showcase
 
 Plugin Showcase / Demonstration:
 
