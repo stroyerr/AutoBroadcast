@@ -15,17 +15,19 @@ Toggle between random and fixed order announcements/broadcasts
 Plugin Showcase / Demonstration:
 
 
-Commands:
-/autobroadcast
-Opens the menu
+### Commands
 
-/ab
-Opens the menu
+`/autobroadcast` (Alias: `/ab`)
 
-Permissions:
+Opens the broadcast menu.
+
+### Permissions
+
 `autobroadcast.menu`
 
 Gives permission to open the configuration menu and modify / create settings and messages.
+
+
 
 Many more features to come!
 
