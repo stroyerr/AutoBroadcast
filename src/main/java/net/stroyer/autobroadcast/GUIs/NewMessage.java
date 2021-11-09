@@ -229,7 +229,7 @@ public class NewMessage {
         playerWaitingForInput = player;
         waitingForInput = true;
         player.closeInventory();
-        TextComponent text = new TextComponent(ChatColor.GOLD + "Type the message you wish to broadcast or click me to cancel. Note: you can use chat codes like &4, &c etc.");
+        TextComponent text = new TextComponent(ChatColor.GOLD + "Type the message you wish to broadcast or click me to cancel. " + ChatColor.GRAY + "Note: You can use chat codes like &4, &c, etc.");
         text.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/b cancel"));
         text.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(ChatColor.RED + "Cancel Input")));
         player.spigot().sendMessage(text);
