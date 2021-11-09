@@ -1,5 +1,5 @@
-AutoBroadcast
-The all in one auto broadcaster
+# AutoBroadcast
+The all in one auto broadcaster.
 
 Every single feature is customisable in-game via a menu
 Super lightweight and lag-free
@@ -23,7 +23,8 @@ Opens the menu
 Opens the menu
 
 Permissions:
-autobroadcast.menu
+`autobroadcast.menu`
+
 Gives permission to open the configuration menu and modify / create settings and messages.
 
 Many more features to come!
