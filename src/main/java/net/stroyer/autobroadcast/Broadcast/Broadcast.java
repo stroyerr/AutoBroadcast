@@ -45,8 +45,13 @@ public class Broadcast {
         }
         if(BroadcastSettings.settings.isRandomised()){
             Random random = new Random();
-            int i = random.nextInt(Message.messages.size()-1);
-            send(Message.messages.get(i));
+            int i;
+            if(Message.messages.size() == 1){
+                i = 0;
+            }else{
+                i = random.nextInt(Message.messages.size());
+            }
+            send(Message.messages.get(i-1));
         }else{
             if(Message.messages.size() == currentId){
             currentId = 0;
