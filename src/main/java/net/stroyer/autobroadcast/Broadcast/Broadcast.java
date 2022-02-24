@@ -49,9 +49,9 @@ public class Broadcast {
             if(Message.messages.size() == 1){
                 i = 0;
             }else{
-                i = random.nextInt(Message.messages.size());
+                i = random.nextInt(Message.messages.size()-1);
             }
-            send(Message.messages.get(i-1));
+            send(Message.messages.get(i));
         }else{
             if(Message.messages.size() == currentId){
             currentId = 0;
