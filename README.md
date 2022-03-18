@@ -1,30 +1,47 @@
-AutoBroadcast
-The all in one auto broadcaster
+# AutoBroadcast
+The all in one auto broadcaster.
 
-Every single feature is customisable in-game via a menu
-Super lightweight and lag-free
-Multiple message types
-Supports colour codes (&3, &a, etc.)
-Choose how often the announcements run
-Customise your announcer prefix easily
-Single-click to enable or disable the announcer
-Easy to create messages to broadcast from in-game via the menu
-Only one permission needed
-Toggle between random and fixed order announcements/broadcasts
+### Features
+
+- Every single feature is customisable in-game via a menu
+
+- Super lightweight and lag-free
+
+- Multiple message types
+
+- Supports color codes (&3, &a, etc.)
+
+- Choose how often the announcements run
+
+- Customize your announcer prefix easily
+
+- Single-click to enable or disable the announcer
+
+- Easy to create messages to broadcast from in-game via the menu
+
+- Only one permission needed
+
+- Toggle between random and fixed order announcements/broadcasts
+
+
+### Showcase
 
 Plugin Showcase / Demonstration:
 
 
-Commands:
-/autobroadcast
-Opens the menu
+### Commands
 
-/ab
-Opens the menu
+`/autobroadcast` (Alias: `/ab`)
 
-Permissions:
-autobroadcast.menu
+Opens the broadcast menu.
+
+### Permissions
+
+`autobroadcast.menu`
+
 Gives permission to open the configuration menu and modify / create settings and messages.
+
+
 
 Many more features to come!
 
